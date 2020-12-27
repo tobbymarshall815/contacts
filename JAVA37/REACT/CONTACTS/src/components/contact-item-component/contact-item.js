@@ -5,6 +5,7 @@ import classes from '../contact-item-component/contact-item.module.css';
 
 
 const contact_item = (props) => {
+
     return(
         <div className={classes.card} onClick={() => {props.history.push(`/contacts/${props.id}`)}}>
             <h2>{props.name} {props.lastname}</h2>

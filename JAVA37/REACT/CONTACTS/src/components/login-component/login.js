@@ -39,7 +39,7 @@ class Login extends React.Component{
                 console.log(response.code);
             }   
         }).catch(err => {
-            console.log(err);
+            console.log("err", err);
         });
     }
 

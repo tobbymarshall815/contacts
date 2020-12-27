@@ -48,12 +48,12 @@ export default class App extends React.Component{
               this.state.token ? <NavBarLogged /> : <NavBarComponent/>} 
               <div className={classes.routes}>   
                 <Switch>
-                  <Route path='/home' exact component={Home} />
+                  <Route path='/home'  component={Home} />
                   <Redirect from= "/" exact to="/home" />
-                  <Route path='/about' exact component={About} />
-                  <Route path='/login' exact component={Login} />
-                  <Route path='/contacts' exact component={Contacts} />
-                  <Route path='/add' exact component={Add} />
+                  <Route path='/about'  component={About} />
+                  <Route path='/login'  component={Login} />
+                  <Route path='/contacts'  component={Contacts} />
+                  <Route path='/add'  component={Add} />
                 </Switch>
               </div>  
           </Context.Provider>
