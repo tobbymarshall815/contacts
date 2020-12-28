@@ -8,7 +8,8 @@ const BASE_URL = 'https://contacts-telran.herokuapp.com';
 class Login extends React.Component{
     state = {
         login:'',
-        password:''
+        password:'',
+        isHidden: true
     }
 
     componentDidMount(){
@@ -18,10 +19,10 @@ class Login extends React.Component{
     }
 
 
-    signIn = (email, password, setErr) => {
+    signIn = (email, password, setErr, setToken, setLoading) => {
         const auth = {email,password};
         const request = JSON.stringify(auth);
-        this.setState({...this.state, loaderShow:true});
+        setLoading();
         return fetch(`${BASE_URL}/api/login`, {
             method:'POST',
             headers:{'Content-Type':'application/json; charset=utf-8'},
@@ -33,19 +34,21 @@ class Login extends React.Component{
                   console.log(response.token);
                   localStorage.setItem("token", response.token);
                   this.props.history.push('./contacts');
-                  return(response.token);
+                  setToken(response.token);
                 })
             }else{
-                console.log(response.code);
+                console.log(response.status);
+                setErr(`Login Failed with code ${response.status}`, this.defineStatusCode(response.status));
             }   
         }).catch(err => {
-            console.log("err", err);
+            setErr(err.message);
         });
     }
 
-    registration = (email, password, setErr) => {
+    registration = (email, password, setErr, setToken, setLoading) => {
         const auth = {email,password};
         const requestBody = JSON.stringify(auth);
+        setLoading();
         return fetch(`${BASE_URL}/api/registration`,{
             method:'POST',
             headers:{
@@ -59,13 +62,32 @@ class Login extends React.Component{
                     console.log("REG OK");
                     localStorage.setItem("token", response.token);
                     this.props.history.push('./contacts');
-                    return(response.token);
-                })
-                
+                    setToken(response.token);
+                })   
+            }else{
+                console.log(response.status);
+                setErr(`Registration failed with code ${response.status}`, this.defineStatusCode(response.status));
             }}).catch(err => {
-                setErr(err);
-            console.log("MES: ", err);
+                setErr(err.message);
         });
+    }
+
+    defineStatusCode = (code) => {
+        switch(code){
+            case 400: return `Wrong email or password format
+            Email must contains one @ and minimum 2 symbols after last dot
+            Password must contain at least one uppercase letter!
+            Password must contain at least one lowercase letter!
+            Password must contain at least one digit!
+            Password must contain at least one special symbol from [‘$’,’~’,’-‘,’_’]!`;
+            case 409: return `User already exist`;
+            case 401: return `Wrong email or password`;
+            default: return `Undefined Error ${code}`
+        }
+    }
+
+    show = () => {
+        this.setState({...this.state, isHidden: false});
     }
 
     render(){
@@ -74,13 +96,26 @@ class Login extends React.Component{
                 {
                     obj => {
                         return(
+                            !obj.isLoading ?
                             <div className={classes.login}>
+                                { obj.error 
+                                ? 
+                                <div style={{color: "red", textAlign:"center", marginBottom: "10px"}}>
+                                    {obj.error}
+                                </div> 
+                                :
+                                 null}
+                                
                                 <input placeholder='Email' className={classes.first_input} value={this.state.login} onChange={(e) => {this.setState({...this.state, login:e.target.value})}}/>
                                 <input placeholder='Password' value={this.state.password} onChange={(e) => {this.setState({...this.state, password:e.target.value})}}/>
                                 <br />
-                                <button onClick={() => {obj.updatetoken(this.signIn(this.state.login, this.state.password, obj.setError))}}> Login</button>
-                                <button onClick={() => {this.registration(this.state.login, this.state.password, obj.updatetoken, obj.setError)}}> Registration</button>
+                                <button onClick={() => {this.signIn(this.state.login, this.state.password, obj.setError, obj.updatetoken, obj.setLoading)}}> Login</button>
+                                <button onClick={() => {this.registration(this.state.login, this.state.password, obj.setError, obj.updatetoken, obj.setLoading)}}> Registration</button>
+                                
                             </div>
+
+                            :
+                            <div className={classes.login}>LOADING...</div>
                         );
                     }
                 }

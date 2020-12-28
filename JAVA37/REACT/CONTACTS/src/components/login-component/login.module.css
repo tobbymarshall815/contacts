@@ -5,6 +5,7 @@
     background-color: darkseagreen;
     padding: 50px;
     box-sizing: border-box;
+    text-align: center;
 
 }
 .login h1{
@@ -34,3 +35,15 @@
 .login button:last-child{
     margin-left: 100px;
 }
+
+.hidden{
+    display: none;
+}
+
+.show{
+    width: 100px;
+    height: 100px;
+    display: block;
+    position: relative;
+}
+

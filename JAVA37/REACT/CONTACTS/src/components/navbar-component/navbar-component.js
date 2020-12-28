@@ -6,8 +6,8 @@ export default () => {
     return(
     <div className={classes.nav}>
         <h1>PHONEBOOK</h1>
-        <NavLink activeStyle={{color:'blue'}} to='/'>HOME</NavLink>
-        <NavLink activeStyle={{color:'blue'}} to='/about'>ABOUT</NavLink>
-        <NavLink activeStyle={{color:'blue'}} to='/login'>LOGIN</NavLink>
+        <NavLink activeStyle={{border:"1px solid black", backgroundColor:"black", color:"white"}} to='/home'>HOME</NavLink>
+        <NavLink activeStyle={{border:"1px solid black", backgroundColor:"black", color:"white"}} to='/about'>ABOUT</NavLink>
+        <NavLink activeStyle={{border:"1px solid black", backgroundColor:"black", color:"white"}} to='/login'>LOGIN</NavLink>
     </div>);
 }

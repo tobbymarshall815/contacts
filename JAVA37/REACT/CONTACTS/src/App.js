@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Redirect, Route, Switch, useHistory} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 
 import Home from './components/home-component/home';
 import About from './components/about-component/about';
@@ -20,7 +20,8 @@ export default class App extends React.Component{
   state = {
     loaderShow: false,
     token:'',
-    error: null
+    error: null,
+    textError: null
   }
 
   componentDidMount(){
@@ -30,20 +31,23 @@ export default class App extends React.Component{
   }
 
   updateToken = (token) => {
-    this.setState({loaderShow:false, token:token});
+    this.setState({loaderShow:false, token:token, error: null, textError: null});
   }
 
-  setError = (error) => {
-    this.setState({loaderShow: false, token:"", error});
+  setError = (error, textError) => {
+    window.alert(textError);
+    console.log(textError);
+    this.setState({loaderShow: false, token:"", error: error, textError: textError});
+  }
+
+  setLoading = () => {
+    this.setState({...this.state, loaderShow: true});
   }
  
   render(){
-    console.log(this.state.token);
-    console.log("TOK: ", localStorage.getItem("token"))
-
     return(
       <>
-          <Context.Provider value={{token:this.state.token, updatecontacts:this.updateContacts ,contacts:this.state.contacts, updatetoken:this.updateToken , deleteAllcontacts:this.deleteAllContacts, updateContact:this.updateContact, getAllContacts:this.getAllContacts, deleteById:this.deleteById, addContact:this.addContact, checkStorage:this.checkStorage, setError: this.setError}}>
+          <Context.Provider value={{token:this.state.token, updatecontacts:this.updateContacts ,contacts:this.state.contacts, updatetoken:this.updateToken , deleteAllcontacts:this.deleteAllContacts, updateContact:this.updateContact, getAllContacts:this.getAllContacts, deleteById:this.deleteById, addContact:this.addContact, checkStorage:this.checkStorage, setError: this.setError, error: this.state.error, setLoading: this.setLoading, isLoading: this.state.loaderShow, textError:this.state.textError}}>
             {
               this.state.token ? <NavBarLogged /> : <NavBarComponent/>} 
               <div className={classes.routes}>   

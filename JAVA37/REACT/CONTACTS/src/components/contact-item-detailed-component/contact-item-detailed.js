@@ -32,9 +32,8 @@ class contact_item_detailed extends React.Component{
 
     render(){  
         let contact = this.props.contacts[this.props.match.params.id];
-        switch(this.state.editmode){
-            case false:
-                return (
+        return (!this.state.editmode ?
+                
                     <Context.Consumer>
                         {
                             obj => {
@@ -53,10 +52,9 @@ class contact_item_detailed extends React.Component{
                             
                         }
                     </Context.Consumer>
-                ); 
-            case true:
-                return <Form contact={contact} fun={this.props.updateContact} token={this.state.token} id={this.props.match.params.id} changemode={this.changemode} id={this.props.match.params.id}/>
-        }
+                 
+            :
+                <Form contact={contact} fun={this.props.updateContact} token={this.state.token} id={this.props.match.params.id} changemode={this.changemode}/>)
     }
 }
 

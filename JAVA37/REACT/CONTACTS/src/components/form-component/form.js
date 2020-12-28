@@ -14,9 +14,6 @@ export default class extends React.Component{
             phone: this.props.contact.phone,
         }
     }
-componentDidMount(){
-    console.log('FORM PROPS: ', this.props);
-}
 
     render(){
         return(<div className={classes.form}>

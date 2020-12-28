@@ -28,7 +28,7 @@ class Add extends React.Component{
 
     addContact = (token, contact) => {
         let req = JSON.stringify(contact);
-        console.log(req);
+
         return fetch(`${BASE_URL}/api/contact`, {
             method:"POST",
             headers:{
@@ -41,7 +41,7 @@ class Add extends React.Component{
                 this.props.history.push('/contacts');
                 console.log('ADDED SUCCSESSFULLY');
             }else{
-                throw new Error(response.status);
+                console.log("ADD ERROR: ", response.status);
             }
             
         })
@@ -57,7 +57,7 @@ class Add extends React.Component{
                     <input value={this.state.fields.phone} placeholder='Phone' onChange={(e) => {this.setState({...this.state, fields:{...this.state.fields, phone:e.target.value}})}}/>
                     <input value={this.state.fields.email} placeholder='email' onChange={(e) => {this.setState({...this.state, fields:{...this.state.fields, email:e.target.value}})}}/>
                     <input value={this.state.fields.address} placeholder='Address' onChange={(e) => {this.setState({...this.state, fields:{...this.state.fields, address:e.target.value}})}}/>
-                    <input value={this.state.fields.description} placeholder='desc' onChange={(e) => {this.setState({...this.state, fields:{...this.state.fields, description:e.target.value}})}}/>
+                    <input value={this.state.fields.description} placeholder='description' onChange={(e) => {this.setState({...this.state, fields:{...this.state.fields, description:e.target.value}})}}/>
                     <button onClick={() => {this.addContact(this.state.token, this.state.fields)}}><b>Save</b></button>
                 </div>
             </div>

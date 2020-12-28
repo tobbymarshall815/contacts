@@ -89,7 +89,12 @@ class ContactPage extends React.Component{
 
     render(){
         if(this.state.contacts.length === 0 && !this.state.fetching){
-            return (<div style={{height:"100vh"}}>No contacts here!</div>);
+            return (
+            <div className={classes.message}>
+                <h1> No Contacts here!</h1>
+                <h2>Add new by clicking on Add in NavBar!</h2>
+            </div>
+            );
         }
         if(!this.state.fetching){
             return(<div className={classes.main}>

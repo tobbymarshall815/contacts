@@ -12,10 +12,10 @@ const NavBarLogged = (props) => {
                 return(
                     <div className={classes.nav}>
                         <h1>PHONEBOOK</h1>
-                        <NavLink activeStyle={{color:'blue'}} exact to='/'>HOME</NavLink>
-                        <NavLink activeStyle={{color:'blue'}} to='/about'>ABOUT</NavLink>
-                        <NavLink activeStyle={{color:'blue'}} to='/contacts'>CONTACTS</NavLink>
-                        <NavLink activeStyle={{color:'blue'}} to='/add'>ADD</NavLink>
+                        <NavLink activeStyle={{border:"1px solid black", backgroundColor:"black", color:"white"}} exact to='/home'>HOME</NavLink>
+                        <NavLink activeStyle={{border:"1px solid black", backgroundColor:"black", color:"white"}} to='/about'>ABOUT</NavLink>
+                        <NavLink activeStyle={{border:"1px solid black", backgroundColor:"black", color:"white"}} to='/contacts'>CONTACTS</NavLink>
+                        <NavLink activeStyle={{border:"1px solid black", backgroundColor:"black", color:"white"}} to='/add'>ADD</NavLink>
                         <button onClick={() => {props.history.push('/login'); localStorage.setItem('token', ''); obj.updatetoken('')}}>Sign Out</button>
                     </div>
                 );}
