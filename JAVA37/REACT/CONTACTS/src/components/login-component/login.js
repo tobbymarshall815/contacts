@@ -105,13 +105,24 @@ class Login extends React.Component{
                                 </div> 
                                 :
                                  null}
-                                
-                                <input placeholder='Email' className={classes.first_input} value={this.state.login} onChange={(e) => {this.setState({...this.state, login:e.target.value})}}/>
-                                <input placeholder='Password' value={this.state.password} onChange={(e) => {this.setState({...this.state, password:e.target.value})}}/>
-                                <br />
-                                <button onClick={() => {this.signIn(this.state.login, this.state.password, obj.setError, obj.updatetoken, obj.setLoading)}}> Login</button>
-                                <button onClick={() => {this.registration(this.state.login, this.state.password, obj.setError, obj.updatetoken, obj.setLoading)}}> Registration</button>
-                                
+                                <form onSubmit={e => {
+                                    e.preventDefault();
+                                    let email = e.target.email.value;
+                                    let password = e.target.password.value;
+                                    if(e.nativeEvent.submitter.name === 'login'){
+                                        this.signIn(email, password, obj.setError, obj.updatetoken, obj.setLoading);
+                                    }else if(e.nativeEvent.submitter.name === 'registration'){
+                                        this.registration(email, password, obj.setError, obj.updatetoken, obj.setLoading);
+                                    }
+                                }}>
+                                    <input name="email" placeholder='Email' className={classes.first_input} value={this.state.login} onChange={(e) => {this.setState({...this.state, login:e.target.value})}}/>
+                                    <input name="password" placeholder='Password' value={this.state.password} onChange={(e) => {this.setState({...this.state, password:e.target.value})}}/>
+                                    <br />
+                                    <button type="submit" name="login">Login</button>
+                                    <button type="submit" name="registration">Registration</button>
+                                    {/* <button onClick={() => {this.signIn(this.state.login, this.state.password, obj.setError, obj.updatetoken, obj.setLoading)}}> Login</button>
+                                    <button onClick={() => {this.registration(this.state.login, this.state.password, obj.setError, obj.updatetoken, obj.setLoading)}}> Registration</button> */}
+                                </form>
                             </div>
 
                             :
